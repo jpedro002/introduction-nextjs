@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { api } from '@/app/services/api'
 
-interface Product {
+export interface Product {
   id: number
   title: string
   slug: string
@@ -14,7 +14,9 @@ interface Product {
 
 const getProductsFeatured = async (): Promise<Product[]> => {
   const response = await api('/products/featured', {
-    cache: 'no-cache',
+    next: {
+      revalidate: 60 * 60, // 1 hour
+    },
   })
   const products = response.json()
 
