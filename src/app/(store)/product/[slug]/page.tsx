@@ -3,6 +3,7 @@ import { Metadata } from 'next'
 
 import { api } from '@/app/services/api'
 import { Product } from '../../(home)/page'
+import { ButtonAddToCart } from '@/components/ButtonAddToCart'
 
 interface ProductProps {
   params: {
@@ -43,6 +44,7 @@ export async function generateStaticParams() {
 
 export default async function ProductPage({ params }: ProductProps) {
   const product = await getProduct(params.slug)
+  
 
   return (
     <div className="relative grid max-h-[860px] grid-cols-3">
@@ -111,12 +113,7 @@ export default async function ProductPage({ params }: ProductProps) {
             </button>
           </div>
         </div>
-        <button
-          type="button"
-          className="mt-8 flex h-12 items-center justify-center rounded-full bg-emerald-600 font-semibold text-white"
-        >
-          Adicionar ao carrinho
-        </button>
+        <ButtonAddToCart product={product} />
       </div>
     </div>
   )
