@@ -1,20 +1,42 @@
 'use client'
 
-import { Product } from '@/app/(store)/(home)/page'
 import React, { ReactNode, createContext, useContext, useState } from 'react'
+
+interface CartItem {
+  productId: number
+  quantity: number
+}
 
 const CartContext = createContext(
   {} as {
-    cart: Product[]
-    setCart: React.Dispatch<React.SetStateAction<Product[]>>
+    cart: CartItem[]
+    addToCart: (productId: number) => void
   },
 )
 
 const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [cart, setCart] = useState<Product[]>([])
+  const [cart, setCart] = useState<CartItem[]>([])
+
+  function addToCart(productId: number) {
+    setCart((prev) => {
+      const productInCart = prev.some((item) => item.productId === productId)
+
+      if (productInCart) {
+        return prev.map((item) => {
+          if (item.productId === productId) {
+            return { ...item, quantity: item.quantity + 1 }
+          } else {
+            return item
+          }
+        })
+      } else {
+        return [...prev, { productId, quantity: 1 }]
+      }
+    })
+  }
 
   return (
-    <CartContext.Provider value={{ cart, setCart }}>
+    <CartContext.Provider value={{ cart, addToCart }}>
       {children}
     </CartContext.Provider>
   )
