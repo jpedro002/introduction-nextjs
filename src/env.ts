@@ -1,6 +1,7 @@
 import z from 'zod'
 
-const envSchema = z.object({ NEXT_PUBLIC_API_URL: z.string().url(),
+const envSchema = z.object({
+  NEXT_PUBLIC_API_URL: z.string().url(),
   APP_URL: z.string().url(),
 })
 
