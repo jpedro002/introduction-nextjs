@@ -1,6 +1,7 @@
 'use client'
 
 import { useSearchParams } from 'next/navigation'
+import { Suspense } from 'react'
 
 export function CurrentSearch() {
   const searchParams = useSearchParams()
@@ -8,8 +9,10 @@ export function CurrentSearch() {
   const query = searchParams.get('q')
 
   return (
-    <p className="text-sm">
-      Resultados para: <span className="font-semibold">{query}</span>
-    </p>
+    <Suspense fallback={'loading...'}>
+      <p className="text-sm">
+        Resultados para: <span className="font-semibold">{query}</span>
+      </p>
+    </Suspense>
   )
 }

@@ -1,14 +1,10 @@
-'use client'
-
 import { Search } from 'lucide-react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/router'
 import { FormEvent } from 'react'
 
 export function SearchForm() {
   const router = useRouter()
-  const searchParams = useSearchParams()
-
-  const query = searchParams.get('q')
+  const query = router.query.q as string
 
   function handleSearch(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
